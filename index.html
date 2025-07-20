@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precio de Bitcoin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        #precio {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <h1>Precio de Bitcoin (Binance)</h1>
+    <p id="precio">Cargando...</p>
+    <button onclick="obtenerPrecio()">Actualizar Precio</button>
+
+    <script>
+        function obtenerPrecio() {
+            fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('precio').innerText = "$" + parseFloat(data.price).toFixed(2);
+                })
+                .catch(error => {
+                    document.getElementById('precio').innerText = "Error al cargar el precio.";
+                    console.error(error);
+                });
+        }
+
+        // Llamar la función automáticamente al cargar la página
+        obtenerPrecio();
+    </script>
+</body>
+</html>
